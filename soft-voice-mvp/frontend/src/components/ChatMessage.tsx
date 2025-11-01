@@ -54,11 +54,12 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           <div className="whitespace-pre-wrap">{message.text}</div>
           
           {message.audioUrl && !isUser && (
-            <div className="mt-3 pt-3 border-t border-soft-pink-300">
+            <div className="mt-3 pt-3 border-t border-soft-pink-300/50 flex items-center">
+              <Volume2 className="w-4 h-4 text-soft-pink-600 mr-2" />
               <audio 
                 src={message.audioUrl} 
                 controls 
-                className="w-full h-8"
+                className="flex-1 h-8"
                 autoPlay
               />
             </div>

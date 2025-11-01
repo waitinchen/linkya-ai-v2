@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
 
     // Cartesia API配置
     const cartesiaApiKey = process.env.CARTESIA_API_KEY;
-    const voiceId = process.env.CARTESIA_VOICE_ID || 'sonic'; // 預設使用sonic-3
+    const voiceId = process.env.CARTESIA_VOICE_ID || 'd3cb9a1f-73d1-48d4-8ee9-53183b40e284'; // 花小軟專屬 Voice ID
 
     if (!cartesiaApiKey) {
       return res.status(500).json({ 
