@@ -86,18 +86,30 @@ cd frontend && npm run dev
 
 ## 📖 文檔導航
 
-### 快速開始
+### 🚀 快速開始
+- **[START_HERE.md](./soft-voice-mvp/START_HERE.md)** - ⭐ **5 分鐘快速入門**
 - [soft-voice-mvp/README.md](./soft-voice-mvp/README.md) - 專案總覽
-- [soft-voice-mvp/QUICKSTART.md](./soft-voice-mvp/QUICKSTART.md) - 5分鐘快速開始
+- [soft-voice-mvp/QUICKSTART.md](./soft-voice-mvp/QUICKSTART.md) - 詳細快速開始
+- [soft-voice-mvp/LOCAL_TESTING_GUIDE.md](./soft-voice-mvp/LOCAL_TESTING_GUIDE.md) - 本地測試完整指引
 
-### 深入理解
+### ⚙️ 配置與設置
+- [soft-voice-mvp/QUICK_CONFIG.md](./soft-voice-mvp/QUICK_CONFIG.md) - 環境配置指南
+- [soft-voice-mvp/SETUP.md](./soft-voice-mvp/SETUP.md) - 詳細安裝指南
+
+### 🏗️ 技術文檔
 - [soft-voice-mvp/ARCHITECTURE.md](./soft-voice-mvp/ARCHITECTURE.md) - 技術架構
+- [soft-voice-mvp/VOICE_AGENT_INTEGRATION.md](./soft-voice-mvp/VOICE_AGENT_INTEGRATION.md) - Voice Agent 整合
 - [soft-voice-mvp/PROJECT_SUMMARY.md](./soft-voice-mvp/PROJECT_SUMMARY.md) - 專案總結
 
-### 部署和運維
+### 🚀 部署文檔
 - [soft-voice-mvp/DEPLOYMENT.md](./soft-voice-mvp/DEPLOYMENT.md) - 部署指南
 
-### ChatKit 版本
+### 🌸 Alpha 測試
+- [soft-voice-mvp/ALPHA_TEST_INVITATION.md](./soft-voice-mvp/ALPHA_TEST_INVITATION.md) - Alpha 測試邀請
+- [soft-voice-mvp/ALPHA_TEST_FORM.md](./soft-voice-mvp/ALPHA_TEST_FORM.md) - 測試回饋表
+- [soft-voice-mvp/ALPHA_INVITATION_MESSAGE.md](./soft-voice-mvp/ALPHA_INVITATION_MESSAGE.md) - 邀請訊息模板
+
+### 🔀 ChatKit 版本
 - [soft-voice-mvp/CHATKIT_COMPARISON.md](./soft-voice-mvp/CHATKIT_COMPARISON.md) - 版本對比
 - [soft-voice-mvp/frontend-chatkit/README.md](./soft-voice-mvp/frontend-chatkit/README.md) - ChatKit 版本說明
 
