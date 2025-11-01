@@ -125,20 +125,22 @@ function App() {
 
         {/* 底部控制區 */}
         <div className="p-6 border-t border-gray-200 bg-white">
-          <div className="flex items-center justify-center space-x-4">
+          <div className="flex flex-col items-center justify-center space-y-4">
             <RecorderButton 
               onRecordingComplete={handleRecordingComplete} 
               disabled={isProcessing}
             />
             
-            <div className="text-center">
-              <p className="text-sm text-gray-600">
-                {isProcessing ? '處理中...' : '點擊按鈕開始對話'}
-              </p>
-              <p className="text-xs text-gray-400 mt-1">
-                按住最長10秒
-              </p>
-            </div>
+            {!isProcessing && (
+              <div className="text-center">
+                <p className="text-sm text-gray-600">
+                  點擊按鈕開始對話
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  最長錄音10秒
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

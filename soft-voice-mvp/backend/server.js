@@ -32,6 +32,9 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`🚀 語氣靈後端運行於 http://localhost:${PORT}`);
+  console.log(`✅ STT 路由: /api/stt`);
+  console.log(`✅ LLM 路由: /api/llm`);
+  console.log(`✅ TTS 路由: /api/tts`);
   console.log(`🌸 花小軟已就緒～`);
 });
 
