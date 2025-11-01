@@ -123,39 +123,19 @@ export default function RecorderButton({ onRecordingComplete, disabled }: Record
   const waveScale = micStatus === 'recording' ? 1 + (audioLevel / 30) : 1;
   
   return (
-    <div className="flex flex-col items-center space-y-2">
-      {/* 麥克風狀態指示燈 */}
-      <div className="flex items-center space-x-2">
-        <div className="flex items-center space-x-1">
-          <div 
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              micStatus === 'idle' ? 'bg-gray-300' :
-              micStatus === 'ready' ? 'bg-yellow-400 animate-pulse' :
-              micStatus === 'recording' ? 'bg-green-500 animate-pulse' :
-              'bg-red-500 animate-pulse'
-            }`}
-          />
-          <span className="text-xs text-gray-600">
-            {micStatus === 'idle' ? '待機' :
-             micStatus === 'ready' ? '準備中' :
-             micStatus === 'recording' ? '錄音中' :
-             '錯誤'}
-          </span>
-        </div>
-      </div>
-
+    <div className="flex items-center space-x-2">
       {/* 錄音按鈕 */}
       <button
         onClick={handleClick}
         disabled={disabled}
         className={`
-          relative w-14 h-14 rounded-full flex items-center justify-center
-          transition-all duration-300 shadow-lg
+          relative w-10 h-10 rounded-full flex items-center justify-center
+          transition-all duration-300
           ${micStatus === 'recording'
             ? 'bg-red-500 hover:bg-red-600' 
             : micStatus === 'error'
-            ? 'bg-gray-400 hover:bg-gray-500'
-            : 'bg-gradient-to-r from-soft-pink-600 to-soft-pink-500 hover:from-soft-pink-500 hover:to-soft-pink-600'
+            ? 'bg-gray-500 hover:bg-gray-600'
+            : 'bg-white/10 hover:bg-white/20'
           }
           disabled:opacity-50 disabled:cursor-not-allowed
         `}
@@ -164,54 +144,45 @@ export default function RecorderButton({ onRecordingComplete, disabled }: Record
         }}
       >
         {micStatus === 'error' ? (
-          <MicOff className="w-6 h-6 text-white" />
+          <MicOff className="w-5 h-5 text-white" />
         ) : (
-          <Mic className="w-6 h-6 text-white" />
+          <Mic className="w-5 h-5 text-white" />
         )}
         
         {/* 波動背景動畫 */}
         {micStatus === 'recording' && (
-          <>
-            <div 
-              className="absolute inset-0 rounded-full border-2 border-red-300 animate-ping"
-              style={{
-                animationDelay: '0s',
-                borderWidth: '3px',
-              }}
-            />
-            <div 
-              className="absolute inset-0 rounded-full border-2 border-red-200 animate-ping"
-              style={{
-                animationDelay: '0.5s',
-                borderWidth: '3px',
-              }}
-            />
-          </>
+          <div 
+            className="absolute inset-0 rounded-full border-2 border-red-300 animate-ping"
+            style={{
+              animationDelay: '0s',
+              borderWidth: '2px',
+            }}
+          />
         )}
       </button>
 
-      {/* 音量波形可視化 */}
+      {/* 音量波形可視化（整合在按鈕右側） */}
       {micStatus === 'recording' && (
-        <div className="flex items-center space-x-1 h-4">
+        <div className="flex items-center space-x-0.5 h-6">
           <div 
-            className="w-1 bg-red-400 rounded-full transition-all duration-75"
-            style={{ height: `${Math.max(4, audioLevel / 2)}px` }}
+            className="w-0.5 bg-red-400 rounded-full transition-all duration-75"
+            style={{ height: `${Math.max(6, audioLevel / 2)}px` }}
           />
           <div 
-            className="w-1 bg-red-400 rounded-full transition-all duration-75"
-            style={{ height: `${Math.max(4, audioLevel / 1.5)}px` }}
+            className="w-0.5 bg-red-400 rounded-full transition-all duration-75"
+            style={{ height: `${Math.max(8, audioLevel / 1.5)}px` }}
           />
           <div 
-            className="w-1 bg-red-500 rounded-full transition-all duration-75"
-            style={{ height: `${Math.max(4, audioLevel)}px` }}
+            className="w-0.5 bg-red-500 rounded-full transition-all duration-75"
+            style={{ height: `${Math.max(10, audioLevel)}px` }}
           />
           <div 
-            className="w-1 bg-red-400 rounded-full transition-all duration-75"
-            style={{ height: `${Math.max(4, audioLevel / 1.5)}px` }}
+            className="w-0.5 bg-red-400 rounded-full transition-all duration-75"
+            style={{ height: `${Math.max(8, audioLevel / 1.5)}px` }}
           />
           <div 
-            className="w-1 bg-red-400 rounded-full transition-all duration-75"
-            style={{ height: `${Math.max(4, audioLevel / 2)}px` }}
+            className="w-0.5 bg-red-400 rounded-full transition-all duration-75"
+            style={{ height: `${Math.max(6, audioLevel / 2)}px` }}
           />
         </div>
       )}

@@ -123,24 +123,33 @@ function App() {
           </div>
         </div>
 
-        {/* 底部控制區 */}
-        <div className="p-6 border-t border-gray-200 bg-white">
-          <div className="flex flex-col items-center justify-center space-y-4">
-            <RecorderButton 
-              onRecordingComplete={handleRecordingComplete} 
-              disabled={isProcessing}
-            />
-            
-            {!isProcessing && (
-              <div className="text-center">
-                <p className="text-sm text-gray-600">
-                  點擊按鈕開始對話
-                </p>
-                <p className="text-xs text-gray-400 mt-1">
-                  最長錄音10秒
-                </p>
+        {/* 底部輸入框 */}
+        <div className="p-4 border-t border-gray-200 bg-white">
+          <div className="max-w-3xl mx-auto">
+            {/* 輸入框容器 */}
+            <div className="relative flex items-center bg-gray-800 rounded-full px-4 py-3 shadow-lg">
+              {/* 左側：麥克風按鈕 */}
+              <div className="flex-shrink-0 mr-3">
+                <RecorderButton 
+                  onRecordingComplete={handleRecordingComplete} 
+                  disabled={isProcessing}
+                />
               </div>
-            )}
+              
+              {/* 中間：提示文字 */}
+              <div className="flex-1">
+                {isProcessing ? (
+                  <div className="flex items-center space-x-2">
+                    <Loader2 className="w-4 h-4 text-pink-400 animate-spin" />
+                    <span className="text-sm text-gray-400">{currentStatus}</span>
+                  </div>
+                ) : (
+                  <span className="text-sm text-gray-400">
+                    隨便問我任何問題...
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
