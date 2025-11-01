@@ -52,6 +52,7 @@ router.post('/', async (req, res) => {
       {
         headers: {
           'X-API-Key': cartesiaApiKey,
+          'Cartesia-Version': '2025-04-16',
           'Content-Type': 'application/json'
         },
         responseType: 'arraybuffer'
