@@ -40,7 +40,7 @@ export default function RecorderButton({ onRecordingComplete, disabled }: Record
       
       // 自動停止
       setTimeout(() => {
-        if (isRecording && mediaRecorderRef.current?.state === 'recording') {
+        if (mediaRecorderRef.current?.state === 'recording') {
           stopRecording();
         }
       }, maxDuration);
@@ -52,7 +52,7 @@ export default function RecorderButton({ onRecordingComplete, disabled }: Record
   };
 
   const stopRecording = () => {
-    if (mediaRecorderRef.current && isRecording) {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
     }
