@@ -12,7 +12,7 @@
 OPENAI_API_KEY=sk-xxx...
 
 # Cartesia Voice Configuration
-CARTESIA_API_KEY=sk_car_swxgArAzEefrT5gm3FX1Xf
+CARTESIA_API_KEY=sk-your_cartesia_api_key_here
 CARTESIA_VOICE_ID=d3cb9a1f-73d1-48d4-8ee9-53183b40e284
 CARTESIA_TTS_MODEL_ID=sonic-3
 CARTESIA_LANGUAGE=zh
@@ -22,9 +22,13 @@ CARTESIA_SAMPLE_RATE=44100
 PORT=3000
 ```
 
-### ⚠️ 重要：更新 OpenAI Key
+> ⚠️ **注意**：歷史文件提到的測試 Cartesia 金鑰已失效，請務必改用你自己的帳號所產生的 API Key，否則 `/api/tts` 會回傳 401/403。
 
-**需要手動編輯**：將 `OPENAI_API_KEY=sk-xxx...` 替換為你的實際 OpenAI API Key
+### ⚠️ 重要：更新 API Key
+
+**需要手動編輯**：
+- 將 `OPENAI_API_KEY=sk-xxx...` 替換為你的實際 OpenAI API Key
+- 將 `CARTESIA_API_KEY=sk-your_cartesia_api_key_here` 替換為你在 Cartesia 後台申請的金鑰
 
 ```bash
 cd soft-voice-mvp/backend

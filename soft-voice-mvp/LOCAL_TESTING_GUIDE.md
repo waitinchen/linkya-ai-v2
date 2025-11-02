@@ -36,15 +36,15 @@ cp env.example .env
 
 ### 2️⃣ 編輯 `.env`，補上 OpenAI 金鑰
 
-**⚠️ 重要**：Cartesia 金鑰已內建，只需補上 OpenAI 的
+**⚠️ 重要**：OpenAI 與 Cartesia 兩組金鑰都需要自行填入
 
 ```env
 # OpenAI API Configuration
 OPENAI_API_KEY=sk-your_actual_openai_key_here  ← 請換成你的 OpenAI Key
 
 # Cartesia Voice Configuration
-CARTESIA_API_KEY=sk_car_swxgArAzEefrT5gm3FX1Xf  ← 已內建 ✓
-CARTESIA_VOICE_ID=d3cb9a1f-73d1-48d4-8ee9-53183b40e284  ← 已內建 ✓
+CARTESIA_API_KEY=sk-your_cartesia_api_key_here  ← 請換成你的 Cartesia Key
+CARTESIA_VOICE_ID=d3cb9a1f-73d1-48d4-8ee9-53183b40e284  ← 建議 Voice ID，可自行更換
 CARTESIA_TTS_MODEL_ID=sonic-3
 CARTESIA_LANGUAGE=zh
 CARTESIA_SAMPLE_RATE=44100
@@ -52,6 +52,8 @@ CARTESIA_SAMPLE_RATE=44100
 # Server Configuration
 PORT=3000
 ```
+
+> 💡 **提醒**：倉庫內的舊測試金鑰已被停用，如出現 401/403 錯誤，請登入 Cartesia 後台重新生成新的 API Key。
 
 **編輯方式**：
 ```bash
@@ -154,16 +156,17 @@ npm install
 **症狀**：前端報錯 "語音合成失敗"
 
 **檢查**：
-- [ ] Cartesia API Key 是否有效
+- [ ] Cartesia API Key 是否有效（403/401 代表金鑰失效或權限不足）
 - [ ] 網路連線是否正常
 - [ ] 瀏覽器控制台錯誤信息
 
 **解決**：
 ```bash
-# 測試 Cartesia API
+# 測試 Cartesia API（請替換成你自己的 API Key）
 curl -X POST https://api.cartesia.ai/tts/bytes \
-  -H "X-API-Key: sk_car_swxgArAzEefrT5gm3FX1Xf" \
+  -H "X-API-Key: sk-your_cartesia_api_key_here" \
   -H "Content-Type: application/json" \
+  -H "Cartesia-Version: 2025-04-16" \
   -d '{"model_id":"sonic-3","transcript":"測試","voice":{"mode":"id","id":"d3cb9a1f-73d1-48d4-8ee9-53183b40e284"}}'
 ```
 

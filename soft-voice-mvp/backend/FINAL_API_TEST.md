@@ -31,7 +31,7 @@
 OPENAI_API_KEY=sk-proj-1trGjhCf9MlBQ23KGyOCYn_K-GY_7MVwo...
 
 # Cartesia Voice Configuration
-CARTESIA_API_KEY=sk_car_swxgArAzEefrT5gm3FX1Xf
+CARTESIA_API_KEY=sk-your_cartesia_api_key_here
 CARTESIA_VOICE_ID=d3cb9a1f-73d1-48d4-8ee9-53183b40e284
 CARTESIA_TTS_MODEL_ID=sonic-3
 CARTESIA_LANGUAGE=zh
@@ -40,6 +40,8 @@ CARTESIA_SAMPLE_RATE=44100
 # Server Configuration
 PORT=3000
 ```
+
+> ⚠️ **注意**：上述 Cartesia 金鑰需替換成你自己的。專案早期提供的測試金鑰已被停用，若仍使用會在 TTS 測試時收到 401/403 Forbidden。
 
 ---
 
