@@ -1,11 +1,14 @@
 import React from 'react';
 import { Volume2, User } from 'lucide-react';
+import StreamingAudioPlayer from './StreamingAudioPlayer';
 
 export interface Message {
   id: string;
   role: 'user' | 'assistant';
   text: string;
   audioUrl?: string;
+  audioStream?: ReadableStream<Uint8Array>;
+  audioMimeType?: string;
   timestamp: Date;
 }
 
@@ -53,7 +56,18 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           
           <div className="whitespace-pre-wrap">{message.text}</div>
           
-          {message.audioUrl && !isUser && (
+          {message.audioStream && !isUser && (
+            <div className="mt-3 pt-3 border-t border-soft-pink-300/50 flex items-center">
+              <Volume2 className="w-4 h-4 text-soft-pink-600 mr-2" />
+              <StreamingAudioPlayer
+                stream={message.audioStream}
+                mimeType={message.audioMimeType}
+                className="flex-1 flex items-center"
+              />
+            </div>
+          )}
+
+          {message.audioUrl && !isUser && !message.audioStream && (
             <div className="mt-3 pt-3 border-t border-soft-pink-300/50 flex items-center">
               <Volume2 className="w-4 h-4 text-soft-pink-600 mr-2" />
               <audio 

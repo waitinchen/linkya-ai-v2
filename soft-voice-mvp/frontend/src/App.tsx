@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import RecorderButton from './components/RecorderButton';
 import ChatMessage, { Message } from './components/ChatMessage';
 import { api } from './lib/api';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Plus, Mic } from 'lucide-react';
 
 function App() {
   const [messages, setMessages] = useState<Message[]>([
@@ -56,15 +56,15 @@ function App() {
 
       // 4. TTS - 語音合成
       setCurrentStatus('🎵 正在生成語音...');
-      const audioBlobResponse = await api.synthesizeSpeech(llmResponse);
-      const audioUrl = URL.createObjectURL(audioBlobResponse);
+      const { stream, mimeType } = await api.streamSpeech(llmResponse);
 
       // 5. 顯示AI回應
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
         text: llmResponse,
-        audioUrl,
+        audioStream: stream,
+        audioMimeType: mimeType,
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, assistantMessage]);
@@ -126,28 +126,38 @@ function App() {
         {/* 底部輸入框 */}
         <div className="p-4 border-t border-gray-200 bg-white">
           <div className="max-w-3xl mx-auto">
-            {/* 輸入框容器 */}
-            <div className="relative flex items-center bg-gray-800 rounded-full px-4 py-3 shadow-lg">
-              {/* 左側：麥克風按鈕 */}
-              <div className="flex-shrink-0 mr-3">
-                <RecorderButton 
-                  onRecordingComplete={handleRecordingComplete} 
-                  disabled={isProcessing}
-                />
-              </div>
-              
-              {/* 中間：提示文字 */}
-              <div className="flex-1">
-                {isProcessing ? (
-                  <div className="flex items-center space-x-2">
-                    <Loader2 className="w-4 h-4 text-pink-400 animate-spin" />
-                    <span className="text-sm text-gray-400">{currentStatus}</span>
-                  </div>
-                ) : (
-                  <span className="text-sm text-gray-400">
-                    隨便問我任何問題...
-                  </span>
-                )}
+            <div className="relative">
+              {/* 輸入框容器 */}
+              <div className="flex items-center gap-3 rounded-full bg-[#1f1f22] px-4 py-2.5 text-white shadow-[0_24px_48px_rgba(15,15,26,0.35)] border border-white/5">
+                {/* 左側：新增操作 */}
+                <button
+                  type="button"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white hover:bg-white/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1f1f22]"
+                >
+                  <Plus className="w-[18px] h-[18px]" strokeWidth={2.5} />
+                </button>
+
+                {/* 中間：提示文字 */}
+                <div className="flex-1 min-w-0">
+                  {isProcessing ? (
+                    <div className="flex items-center gap-2 text-sm text-white/70">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span className="truncate">{currentStatus || '正在處理中…'}</span>
+                    </div>
+                  ) : (
+                    <span className="text-sm text-white/60">隨便問我任何問題…</span>
+                  )}
+                </div>
+
+                {/* 右側：圖示與錄音按鈕 */}
+                <div className="flex items-center gap-3">
+                  <Mic className={`w-4 h-4 ${isProcessing ? 'text-white/40' : 'text-white/60'}`} />
+                  <RecorderButton 
+                    onRecordingComplete={handleRecordingComplete} 
+                    disabled={isProcessing}
+                    processing={isProcessing}
+                  />
+                </div>
               </div>
             </div>
           </div>

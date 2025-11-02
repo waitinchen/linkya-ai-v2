@@ -205,6 +205,12 @@ MIT License
 
 ---
 
+## 🎤 Streaming TTS Integration (ElevenLabs)
+
+詳見 👉 [VOICE_AGENT_TTS_README.md](./VOICE_AGENT_TTS_README.md)
+
+---
+
 **🎙️ 語氣靈的聲音人格世界，正式登場！** 🌸
 
 *開始與花小軟展開溫暖的語音對話吧～*

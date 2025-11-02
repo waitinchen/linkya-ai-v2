@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Mic, MicOff } from 'lucide-react';
+import { Mic, MicOff, AudioLines, ArrowUp } from 'lucide-react';
 
 interface RecorderButtonProps {
   onRecordingComplete: (audioBlob: Blob) => void;
   disabled?: boolean;
+  processing?: boolean;
 }
 
-export default function RecorderButton({ onRecordingComplete, disabled }: RecorderButtonProps) {
+export default function RecorderButton({ onRecordingComplete, disabled, processing = false }: RecorderButtonProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [micStatus, setMicStatus] = useState<'idle' | 'ready' | 'recording' | 'error'>('idle');
   const [audioLevel, setAudioLevel] = useState(0); // 音量級別 0-100
@@ -120,72 +121,63 @@ export default function RecorderButton({ onRecordingComplete, disabled }: Record
   };
 
   // 根據音量生成波動動畫的 scale
-  const waveScale = micStatus === 'recording' ? 1 + (audioLevel / 30) : 1;
+  const waveScale = micStatus === 'recording' ? 1 + Math.min(audioLevel / 120, 0.15) : 1;
+  const showSendState = processing && micStatus !== 'recording' && micStatus !== 'error';
+  const buttonBaseClass = `
+    relative w-11 h-11 rounded-full flex items-center justify-center
+    transition-all duration-300
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400
+    focus-visible:ring-offset-2 focus-visible:ring-offset-[#1f1f22]
+  `;
+  const buttonStateClass = showSendState
+    ? 'bg-white text-gray-900 shadow-[0_12px_28px_rgba(0,0,0,0.35)]'
+    : micStatus === 'recording'
+    ? 'bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-[0_12px_28px_rgba(244,114,182,0.45)]'
+    : micStatus === 'error'
+    ? 'bg-red-500/90 text-white shadow-[0_12px_28px_rgba(239,68,68,0.45)]'
+    : 'bg-white/10 text-white hover:bg-white/20';
   
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center">
       {/* 錄音按鈕 */}
       <button
         onClick={handleClick}
         disabled={disabled}
-        className={`
-          relative w-10 h-10 rounded-full flex items-center justify-center
-          transition-all duration-300
-          ${micStatus === 'recording'
-            ? 'bg-red-500 hover:bg-red-600' 
-            : micStatus === 'error'
-            ? 'bg-gray-500 hover:bg-gray-600'
-            : 'bg-white/10 hover:bg-white/20'
-          }
-          disabled:opacity-50 disabled:cursor-not-allowed
-        `}
+        type="button"
+        className={`${buttonBaseClass} ${buttonStateClass} ${
+          disabled ? 'opacity-60 cursor-not-allowed pointer-events-none' : ''
+        }`}
         style={{
           transform: `scale(${waveScale})`,
         }}
+        aria-label={
+          showSendState
+            ? '語音上傳中'
+            : micStatus === 'recording'
+            ? '停止錄音'
+            : '開始錄音'
+        }
       >
-        {micStatus === 'error' ? (
-          <MicOff className="w-5 h-5 text-white" />
+        {showSendState ? (
+          <ArrowUp className="w-5 h-5" strokeWidth={2.5} />
+        ) : micStatus === 'error' ? (
+          <MicOff className="w-5 h-5" />
+        ) : micStatus === 'recording' ? (
+          <AudioLines className="w-5 h-5" strokeWidth={2.5} />
         ) : (
-          <Mic className="w-5 h-5 text-white" />
+          <Mic className="w-5 h-5" />
         )}
-        
-        {/* 波動背景動畫 */}
+
+        {/* 錄音時的光暈 */}
         {micStatus === 'recording' && (
           <div 
-            className="absolute inset-0 rounded-full border-2 border-red-300 animate-ping"
+            className="absolute inset-0 rounded-full bg-pink-400/30 blur-lg animate-pulse"
             style={{
-              animationDelay: '0s',
-              borderWidth: '2px',
+              animationDuration: '1.4s',
             }}
           />
         )}
       </button>
-
-      {/* 音量波形可視化（整合在按鈕右側） */}
-      {micStatus === 'recording' && (
-        <div className="flex items-center space-x-0.5 h-6">
-          <div 
-            className="w-0.5 bg-red-400 rounded-full transition-all duration-75"
-            style={{ height: `${Math.max(6, audioLevel / 2)}px` }}
-          />
-          <div 
-            className="w-0.5 bg-red-400 rounded-full transition-all duration-75"
-            style={{ height: `${Math.max(8, audioLevel / 1.5)}px` }}
-          />
-          <div 
-            className="w-0.5 bg-red-500 rounded-full transition-all duration-75"
-            style={{ height: `${Math.max(10, audioLevel)}px` }}
-          />
-          <div 
-            className="w-0.5 bg-red-400 rounded-full transition-all duration-75"
-            style={{ height: `${Math.max(8, audioLevel / 1.5)}px` }}
-          />
-          <div 
-            className="w-0.5 bg-red-400 rounded-full transition-all duration-75"
-            style={{ height: `${Math.max(6, audioLevel / 2)}px` }}
-          />
-        </div>
-      )}
     </div>
   );
 }

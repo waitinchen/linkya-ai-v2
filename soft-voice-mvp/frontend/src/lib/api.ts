@@ -45,8 +45,8 @@ export const api = {
     return data.response;
   },
 
-  // TTS語音合成
-  async synthesizeSpeech(text: string): Promise<Blob> {
+  // TTS語音合成（串流）
+  async streamSpeech(text: string): Promise<{ stream: ReadableStream<Uint8Array>; mimeType: string }> {
     const response = await fetch(`${API_BASE}/tts`, {
       method: 'POST',
       headers: {
@@ -58,8 +58,15 @@ export const api = {
     if (!response.ok) {
       throw new Error('TTS failed');
     }
-    
-    return await response.blob();
+
+    if (!response.body) {
+      throw new Error('瀏覽器不支援串流播放');
+    }
+
+    const mimeType = response.headers.get('Content-Type') || 'audio/mpeg';
+    return {
+      stream: response.body,
+      mimeType,
+    };
   },
 };
-
