@@ -66,6 +66,7 @@ async function testCartesiaTTS() {
       {
         headers: {
           'X-API-Key': cartesiaKey,
+          'Cartesia-Version': '2025-04-16',
           'Content-Type': 'application/json'
         },
         responseType: 'arraybuffer',
@@ -77,8 +78,16 @@ async function testCartesiaTTS() {
     console.log(`  音訊大小: ${response.data.length} bytes\n`);
     return true;
   } catch (error) {
+    const status = error.response?.status;
+    const errorData = error.response?.data;
+
     console.log('  ❌ TTS 測試失敗!');
-    console.log(`  錯誤: ${error.response?.data || error.message}\n`);
+    if (status === 401 || status === 403) {
+      console.log('  錯誤: Cartesia API 金鑰無效或沒有權限\n');
+      console.log('  提示: 請登入 Cartesia 後台重新生成 API Key，並確認帳號啟用了 Sonic TTS\n');
+    } else {
+      console.log(`  錯誤: ${errorData || error.message}\n`);
+    }
     return false;
   }
 }

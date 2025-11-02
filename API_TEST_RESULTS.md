@@ -73,8 +73,8 @@ node test-api.js
 ## 結論
 
 **後端**：
-- ✅ Cartesia 配置正確
-- ✅ TTS API 運作正常
+- ⚠️ Cartesia 配置需提供有效 API Key（舊測試金鑰已失效會回傳 403）
+- ✅ TTS API 邏輯正常（使用有效金鑰時）
 - ❌ 需要更新 OpenAI API Key
 
 **前端**：

@@ -67,10 +67,22 @@ router.post('/', async (req, res) => {
     res.send(Buffer.from(response.data));
 
   } catch (error) {
-    console.error('❌ TTS錯誤:', error.response?.data || error.message);
-    res.status(500).json({ 
-      error: '語音合成失敗', 
-      details: error.response?.data || error.message 
+    const status = error.response?.status;
+    const errorData = error.response?.data;
+
+    if (status === 401 || status === 403) {
+      console.error('❌ TTS授權錯誤:', errorData || error.message);
+      return res.status(status).json({
+        error: 'Cartesia API 金鑰無效或權限不足',
+        hint: '請確認 CARTESIA_API_KEY 是否正確、仍然有效，並具有 Sonic TTS 權限',
+        details: errorData || error.message
+      });
+    }
+
+    console.error('❌ TTS錯誤:', errorData || error.message);
+    res.status(500).json({
+      error: '語音合成失敗',
+      details: errorData || error.message
     });
   }
 });

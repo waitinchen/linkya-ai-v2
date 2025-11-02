@@ -63,16 +63,18 @@ OPENAI_API_KEY=sk-proj-1trGjhCf9MlBQ23KGyOCYn_K-GY_7MVwo...
 - GPT-4o LLM: ✅ 已配置
 
 # Cartesia
-CARTESIA_API_KEY=sk_car_swxgArAzEefrT5gm3FX1Xf
+CARTESIA_API_KEY=sk-your_cartesia_api_key_here
 CARTESIA_VOICE_ID=d3cb9a1f-73d1-48d4-8ee9-53183b40e284
 CARTESIA_TTS_MODEL_ID=sonic-3
 CARTESIA_LANGUAGE=zh
 CARTESIA_SAMPLE_RATE=44100
-- TTS: ✅ 已配置
+- TTS: ✅ 需填入有效金鑰後才可用
 
 # Server
 PORT=3000
 ```
+
+> ⚠️ **提醒**：請替換為你自己的 Cartesia API Key。倉庫曾附帶的測試金鑰已停用，若未更新會導致 `/api/tts` 回傳 Forbidden。
 
 ### 人格系統（已配置）
 - **名稱**: 花小軟
