@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartesia TTS 皜祈岫</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        audio {
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>? Cartesia TTS 皜祈岫?</h1>
+        <div class="form-group">
+            <label for="textInput">頛詨閬?????嚗?/label>
+            <textarea id="textInput" placeholder="頛詨??...">?雿末嚚??航撠??</textarea>
+        </div>
+        <button id="generateBtn" onclick="generateSpeech()">? ??隤</button>
+        <div id="status"></div>
+        <audio id="audioPlayer" controls style="display: none;"></audio>
+    </div>
+    <script>
+        async function generateSpeech() {
+            const text = document.getElementById('textInput').value.trim();
+            const statusDiv = document.getElementById('status');
+            const audioPlayer = document.getElementById('audioPlayer');
+            const button = document.getElementById('generateBtn');
+            button.disabled = true;
+            statusDiv.innerHTML = '<div class="status loading">??甇???隤...</div>';
+            audioPlayer.style.display = 'none';
+            try {
+                const url = `/api/cartesia/greeting?text=${encodeURIComponent(text)}`;
+                const response = await fetch(url, { method: 'GET' });
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(`API ?航炊: ${response.status} - ${errorData.error || 'Unknown'}`);
+                }
+                const audioBlob = await response.blob();
+                const audioUrl = URL.createObjectURL(audioBlob);
+                audioPlayer.src = audioUrl;
+                audioPlayer.style.display = 'block';
+                await audioPlayer.play();
+                statusDiv.innerHTML = '<div class="status success">??隤????嚗?/div>';
+            } catch (error) {
+                console.error('?航炊:', error);
+                statusDiv.innerHTML = `<div class="status error">???潛??航炊嚗?{error.message}</div>`;
+            } finally {
+                button.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
