@@ -1,0 +1,7 @@
+﻿FROM node:18-alpine
+WORKDIR /app
+COPY soft-voice-mvp/backend/package*.json ./
+RUN npm ci --production
+COPY soft-voice-mvp/backend/ ./
+EXPOSE 3000
+CMD ["npm", "start"]
