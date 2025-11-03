@@ -30,10 +30,12 @@ npm install
 **編輯 `backend/.env`**：
 ```env
 OPENAI_API_KEY=你的_OpenAI_Key  # ← 改成你的！
-CARTESIA_API_KEY=sk_car_swxgArAzEefrT5gm3FX1Xf  # ✅ 已內建
+CARTESIA_API_KEY=sk-your_cartesia_api_key_here  # ← 必須換成你自己的金鑰
 CARTESIA_VOICE_ID=d3cb9a1f-73d1-48d4-8ee9-53183b40e284
 PORT=3000
 ```
+
+> ⚠️ **提醒**：倉庫原本提供的測試 Cartesia 金鑰已失效，請前往 Cartesia 後台申請新的 API Key 後再啟動。
 
 ### 4️⃣ 啟動服務
 

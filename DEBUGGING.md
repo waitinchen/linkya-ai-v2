@@ -8,7 +8,7 @@
 
 ```env
 OPENAI_API_KEY=你的實際APIKey  ← 重要！
-CARTESIA_API_KEY=sk_car_swxgArAzEefrT5gm3FX1Xf
+CARTESIA_API_KEY=sk-你的Cartesia金鑰（需自行申請）
 CARTESIA_VOICE_ID=d3cb9a1f-73d1-48d4-8ee9-53183b40e284
 PORT=3000
 ```
@@ -60,7 +60,9 @@ PORT=3000
 
 **症狀**：TTS 失敗
 
-**解決**：檢查 `.env` 文件中的 `CARTESIA_API_KEY`
+**解決**：
+- 檢查 `.env` 文件中的 `CARTESIA_API_KEY`
+- 如果終端顯示 401/403，代表金鑰失效或無 Sonic 權限，需到 Cartesia 後台重新生成
 
 ### 麥克風權限
 
